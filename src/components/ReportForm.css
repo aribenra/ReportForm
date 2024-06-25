@@ -1,0 +1,58 @@
+/* src/components/ReportForm.css */
+
+.report-form {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    background-color: #f9f9f9;
+}
+
+.report-form h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.form-group {
+    margin-bottom: 15px; /* Add spacing between fields */
+}
+
+.form-group label {
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.rounded-input {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    color: #333;
+}
+
+.rounded-input::placeholder {
+    color: #999;
+}
+
+.submit-button {
+    margin-top: 20px;
+    padding: 10px;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+}
+
+.submit-button:hover {
+    background-color: #333;
+}
+
+.alert {
+    color: red;
+    text-align: center;
+    margin-bottom: 10px;
+}

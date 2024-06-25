@@ -1,25 +1,89 @@
-import logo from './logo.svg';
-import './App.css';
+// src/App.js
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
+import { FaHome, FaFileAlt, FaListAlt } from 'react-icons/fa';
+import ReportForm from './components/ReportForm';
+import ReportList from './components/ReportList';
+import './App.css'; // Importa el archivo CSS
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const App = () => {
+    const [reports, setReports] = useState([]);
+    const [message, setMessage] = useState('');
+    const [error, setError] = useState('');
+
+    const handleFormSubmit = async (formData) => {
+        try {
+            const response = await fetch('http://localhost:5000/api/generateReport', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            if (!response.ok) {
+                throw new Error('Error generating report');
+            }
+
+            const result = await response.json();
+            const newReport = {
+                ...formData,
+                informe: result.informe,
+                fecha: new Date().toISOString()
+            };
+
+            setReports([...reports, newReport]);
+            setMessage('Informe enviado');
+            setError('');
+            setTimeout(() => setMessage(''), 5000);
+        } catch (error) {
+            console.error('Error generating report:', error);
+            setError('Error al enviar el informe');
+            setMessage('');
+            setTimeout(() => setError(''), 5000);
+        }
+    };
+
+    return (
+        <Router>
+            <div className="d-flex">
+                <nav className="sidebar">
+                    <ul className="list-unstyled components">
+                        <li>
+                            <Link to="/" className="d-flex align-items-center">
+                                <FaHome className="me-2" />
+                                <span>Home</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/form" className="d-flex align-items-center">
+                                <FaFileAlt className="me-2" />
+                                <span>Formulario</span>
+                            </Link>
+                        </li>
+                        <li>
+                            <Link to="/reports" className="d-flex align-items-center">
+                                <FaListAlt className="me-2" />
+                                <span>Lista de Informes</span>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+                <div className="content">
+                    <div className="container">
+                        <h1 className="text-center my-4">Informe de Resolución de Problemas de Conectividad</h1>
+                        {message && <div className="alert alert-success">{message}</div>}
+                        {error && <div className="alert alert-danger">{error}</div>}
+                        <Routes>
+                            <Route path="/" element={<div>Bienvenido a la página de inicio</div>} />
+                            <Route path="/form" element={<ReportForm onSubmit={handleFormSubmit} />} />
+                            <Route path="/reports" element={<ReportList reports={reports} />} />
+                        </Routes>
+                    </div>
+                </div>
+            </div>
+        </Router>
+    );
+};
 
 export default App;
