@@ -39,39 +39,34 @@ const ReportForm = ({ onSubmit }) => {
         });
     };
 
+    const handleDerivacionChange = (e) => {
+        const { name, checked } = e.target;
+        if (name === 'derivacionNOC' && checked) {
+            setFormData({
+                ...formData,
+                derivacionNOC: true,
+                derivacionVT: false,
+                supervisorVT: '',
+            });
+        } else if (name === 'derivacionVT' && checked) {
+            setFormData({
+                ...formData,
+                derivacionNOC: false,
+                derivacionVT: true,
+                supervisorNOC: '',
+            });
+        }
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         onSubmit(formData);
     };
 
-    const handleDerivacionNOCChange = (e) => {
-        const { checked } = e.target;
-        setFormData({
-            ...formData,
-            derivacionNOC: checked,
-            derivacionVT: checked ? false : formData.derivacionVT,
-            supervisorNOC: '',
-            supervisorVT: ''
-        });
-    };
-
-    const handleDerivacionVTChange = (e) => {
-        const { checked } = e.target;
-        setFormData({
-            ...formData,
-            derivacionVT: checked,
-            derivacionNOC: checked ? false : formData.derivacionNOC,
-            supervisorNOC: '',
-            supervisorVT: ''
-        });
-    };
-
     return (
-        <form onSubmit={handleSubmit} className="p-3 report-form">
-            <div className="card mb-3">
-                <div className="card-header">
-                    <h3>Información Inicial</h3>
-                </div>
+        <form onSubmit={handleSubmit} className="report-form">
+            <div className="card">
+                <div className="card-header">Información inicial</div>
                 <div className="card-body">
                     <div className="form-group row">
                         <label className="col-sm-3 col-form-label">Cliente <span className="text-danger">*</span></label>
@@ -94,31 +89,44 @@ const ReportForm = ({ onSubmit }) => {
                 </div>
             </div>
 
-            <div className="card mb-3">
-                <div className="card-header">
-                    <h3>Acciones</h3>
-                </div>
+            <div className="card">
+                <div className="card-header">Acciones</div>
                 <div className="card-body">
-                    {['configuracionWAN', 'optimizacionCanalesWiFi', 'cambioDNS', 'reinicioONT', 'reinicioMesh', 'sincronizacionMesh', 'cambioContraseñaWiFi', 'implementacionCableadoRed', 'ajusteAnchoBanda', 'verificacionCoberturaWiFi', 'revisionVelocidadDuplex', 'verificacionDispositivosAlternativos', 'configuracionVoIP', 'configuracionAppFonowin'].map((field, index) => (
+                    {[
+                        'configuracionWAN',
+                        'optimizacionCanalesWiFi',
+                        'cambioDNS',
+                        'reinicioONT',
+                        'reinicioMesh',
+                        'sincronizacionMesh',
+                        'cambioContraseñaWiFi',
+                        'implementacionCableadoRed',
+                        'ajusteAnchoBanda',
+                        'verificacionCoberturaWiFi',
+                        'revisionVelocidadDuplex',
+                        'verificacionDispositivosAlternativos',
+                        'configuracionVoIP',
+                        'configuracionAppFonowin'
+                    ].map((field, index) => (
                         <div className="form-group row" key={index}>
-                            <label className="col-sm-3 col-form-label">{field.replace(/([A-Z])/g, ' $1').charAt(0).toUpperCase() + field.replace(/([A-Z])/g, ' $1').slice(1)}</label>
-                            <div className="col-sm-9">
+                            <label className="col-sm-6 col-form-label">{field.replace(/([A-Z])/g, ' $1').replace(/ W A N/g, ' WAN').replace(/ D N S/g, ' DNS').replace(/ O N T/g, ' ONT').replace(/ Wi Fi/g, ' WiFi').replace(/ Vo I P/g, ' VoIP').replace(/ App Fonowin/g, ' App Fonowin').charAt(0).toUpperCase() + field.replace(/([A-Z])/g, ' $1').replace(/ W A N/g, ' WAN').replace(/ D N S/g, ' DNS').replace(/ O N T/g, ' ONT').replace(/ Wi Fi/g, ' WiFi').replace(/ Vo I P/g, ' VoIP').replace(/ App Fonowin/g, ' App Fonowin').slice(1)}</label>
+                            <div className="col-sm-6">
                                 <input type="checkbox" name={field} className="form-check-input" checked={formData[field]} onChange={handleChange} />
+                                <label className="form-check-label" htmlFor={field}></label>
                             </div>
                         </div>
                     ))}
                 </div>
             </div>
 
-            <div className="card mb-3">
-                <div className="card-header">
-                    <h3>Derivaciones</h3>
-                </div>
+            <div className="card">
+                <div className="card-header">Derivaciones</div>
                 <div className="card-body">
                     <div className="form-group row">
-                        <label className="col-sm-3 col-form-label">Derivación NOC</label>
+                        <label className="col-sm-3 col-form-label">Derivacion NOC</label>
                         <div className="col-sm-9">
-                            <input type="checkbox" name="derivacionNOC" className="form-check-input" checked={formData.derivacionNOC} onChange={handleDerivacionNOCChange} />
+                            <input type="checkbox" name="derivacionNOC" className="form-check-input" checked={formData.derivacionNOC} onChange={handleDerivacionChange} />
+                            <label className="form-check-label" htmlFor="derivacionNOC"></label>
                         </div>
                     </div>
                     {formData.derivacionNOC && (
@@ -135,9 +143,10 @@ const ReportForm = ({ onSubmit }) => {
                         </div>
                     )}
                     <div className="form-group row">
-                        <label className="col-sm-3 col-form-label">Derivación VT</label>
+                        <label className="col-sm-3 col-form-label">Derivacion VT</label>
                         <div className="col-sm-9">
-                            <input type="checkbox" name="derivacionVT" className="form-check-input" checked={formData.derivacionVT} onChange={handleDerivacionVTChange} />
+                            <input type="checkbox" name="derivacionVT" className="form-check-input" checked={formData.derivacionVT} onChange={handleDerivacionChange} />
+                            <label className="form-check-label" htmlFor="derivacionVT"></label>
                         </div>
                     </div>
                     {formData.derivacionVT && (
@@ -156,10 +165,8 @@ const ReportForm = ({ onSubmit }) => {
                 </div>
             </div>
 
-            <div className="card mb-3">
-                <div className="card-header">
-                    <h3>Conclusiones</h3>
-                </div>
+            <div className="card">
+                <div className="card-header">Conclusiones</div>
                 <div className="card-body">
                     <div className="form-group row">
                         <label className="col-sm-3 col-form-label">Recomendaciones para Mejora</label>
@@ -181,8 +188,7 @@ const ReportForm = ({ onSubmit }) => {
                     </div>
                 </div>
             </div>
-
-            <button type="submit" className="btn btn-dark mt-3">Enviar Informe</button>
+            <button type="submit" className="btn btn-dark mt-3 submit-button">Enviar Informe</button>
         </form>
     );
 };
