@@ -1,4 +1,3 @@
-// src/components/ReportForm.js
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ReportForm.css'; // Asegúrate de que esta línea esté presente para importar el archivo CSS
@@ -41,19 +40,19 @@ const ReportForm = ({ onSubmit }) => {
 
     const handleDerivacionChange = (e) => {
         const { name, checked } = e.target;
-        if (name === 'derivacionNOC' && checked) {
+        if (name === 'derivacionNOC') {
             setFormData({
                 ...formData,
-                derivacionNOC: true,
-                derivacionVT: false,
-                supervisorVT: '',
+                derivacionNOC: checked,
+                derivacionVT: checked ? false : formData.derivacionVT,
+                supervisorNOC: checked ? formData.supervisorNOC : '',
             });
-        } else if (name === 'derivacionVT' && checked) {
+        } else if (name === 'derivacionVT') {
             setFormData({
                 ...formData,
-                derivacionNOC: false,
-                derivacionVT: true,
-                supervisorNOC: '',
+                derivacionVT: checked,
+                derivacionNOC: checked ? false : formData.derivacionNOC,
+                supervisorVT: checked ? formData.supervisorVT : '',
             });
         }
     };
