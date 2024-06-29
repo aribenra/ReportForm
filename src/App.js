@@ -4,12 +4,15 @@ import { BrowserRouter as Router, Route, Routes, Link } from 'react-router-dom';
 import { FaHome, FaFileAlt, FaListAlt } from 'react-icons/fa';
 import ReportForm from './components/ReportForm';
 import ReportList from './components/ReportList';
-import './App.css'; // Importa el archivo CSS
+import ReportModal from './components/ReportModal';
+import './App.css'; // Asegúrate de que esta línea esté presente para importar el archivo CSS
 
 const App = () => {
     const [reports, setReports] = useState([]);
     const [message, setMessage] = useState('');
     const [error, setError] = useState('');
+    const [modalVisible, setModalVisible] = useState(false);
+    const [modalContent, setModalContent] = useState('');
 
     const handleFormSubmit = async (formData) => {
         try {
@@ -35,6 +38,8 @@ const App = () => {
             setReports([...reports, newReport]);
             setMessage('Informe enviado');
             setError('');
+            setModalContent(result.informe);
+            setModalVisible(true);
             setTimeout(() => setMessage(''), 5000);
         } catch (error) {
             console.error('Error generating report:', error);
@@ -42,6 +47,10 @@ const App = () => {
             setMessage('');
             setTimeout(() => setError(''), 5000);
         }
+    };
+
+    const closeModal = () => {
+        setModalVisible(false);
     };
 
     return (
@@ -79,6 +88,7 @@ const App = () => {
                             <Route path="/form" element={<ReportForm onSubmit={handleFormSubmit} />} />
                             <Route path="/reports" element={<ReportList reports={reports} />} />
                         </Routes>
+                        {modalVisible && <ReportModal content={modalContent} onClose={closeModal} />}
                     </div>
                 </div>
             </div>
