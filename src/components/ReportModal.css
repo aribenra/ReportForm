@@ -54,6 +54,16 @@
     margin-top: 40px;
 }
 
+.formatted-content {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #333;
+}
+
+.formatted-content p {
+    margin: 10px 0;
+}
+
 h1 {
     font-size: 24px;
     margin-bottom: 10px;
@@ -63,12 +73,6 @@ h1 {
 h2 {
     font-size: 20px;
     margin-bottom: 8px;
-    color: #333;
-}
-
-p {
-    margin: 10px 0;
-    line-height: 1.6;
     color: #333;
 }
 

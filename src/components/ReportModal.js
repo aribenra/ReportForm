@@ -13,7 +13,11 @@ const ReportModal = ({ content, onClose }) => {
                 <button className="close-button" onClick={onClose}>×</button>
                 <button className="copy-button" onClick={handleCopy}>Copiar Informe</button>
                 <div className="modal-body">
-                    <div dangerouslySetInnerHTML={{ __html: content }} />
+                    <div className="formatted-content">
+                        {content.split('\n').map((line, index) => (
+                            <p key={index}>{line}</p>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>
