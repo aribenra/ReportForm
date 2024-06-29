@@ -13,7 +13,6 @@ const ReportModal = ({ content, onClose }) => {
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
-                <button className="close-button" onClick={onClose}>×</button>
                 <button className="copy-button" onClick={handleCopy}>
                     {copied ? 'Copiado' : (
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24" className="icon-md-heavy">
