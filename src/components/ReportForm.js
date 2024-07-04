@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './ReportForm.css'; // Asegúrate de que esta línea esté presente para importar el archivo CSS
+import ProblemDescription from './ProblemDescription'; // Importar el nuevo componente
+
 
 const ReportForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
@@ -30,11 +32,10 @@ const ReportForm = ({ onSubmit }) => {
         comentarios: '',
     });
 
-    const handleChange = (e) => {
-        const { name, value, type, checked } = e.target;
+    const handleChange = (name, value) => {
         setFormData({
             ...formData,
-            [name]: type === 'checkbox' ? checked : value
+            [name]: value
         });
     };
 
@@ -79,12 +80,7 @@ const ReportForm = ({ onSubmit }) => {
                             <input type="text" name="ticket" className="form-control rounded-input" placeholder="Ingrese el número de ticket" value={formData.ticket} onChange={handleChange} required />
                         </div>
                     </div>
-                    <div className="form-group row">
-                        <label className="col-sm-3 col-form-label">Descripción del Problema <span className="text-danger">*</span></label>
-                        <div className="col-sm-9">
-                            <textarea name="problema" className="form-control rounded-input" placeholder="Describa el problema" value={formData.problema} onChange={handleChange} required />
-                        </div>
-                    </div>
+                    <ProblemDescription value={formData.problema} onChange={(value) => handleChange('problema', value)} />
                 </div>
             </div>
 

@@ -16,7 +16,7 @@ const App = () => {
 
     const handleFormSubmit = async (formData) => {
         try {
-            const response = await fetch('http://localhost:5000/api/generateReport', {
+            const response = await fetch('http://192.168.8.43:5000/api/generateReport', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
