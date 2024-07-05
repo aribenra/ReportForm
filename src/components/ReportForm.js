@@ -3,7 +3,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './ReportForm.css'; // Asegúrate de que esta línea esté presente para importar el archivo CSS
 import ProblemDescription from './ProblemDescription'; // Importar el nuevo componente
 
-
 const ReportForm = ({ onSubmit }) => {
     const [formData, setFormData] = useState({
         cliente: '',
@@ -32,10 +31,11 @@ const ReportForm = ({ onSubmit }) => {
         comentarios: '',
     });
 
-    const handleChange = (name, value) => {
+    const handleChange = (e) => {
+        const { name, value, type, checked } = e.target;
         setFormData({
             ...formData,
-            [name]: value
+            [name]: type === 'checkbox' ? checked : value
         });
     };
 
@@ -80,7 +80,7 @@ const ReportForm = ({ onSubmit }) => {
                             <input type="text" name="ticket" className="form-control rounded-input" placeholder="Ingrese el número de ticket" value={formData.ticket} onChange={handleChange} required />
                         </div>
                     </div>
-                    <ProblemDescription value={formData.problema} onChange={(value) => handleChange('problema', value)} />
+                    <ProblemDescription value={formData.problema} onChange={(value) => setFormData({ ...formData, problema: value })} />
                 </div>
             </div>
 
