@@ -1,35 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './ReportForm.css'; // Asegúrate de que esta línea esté presente para importar el archivo CSS
-import ProblemDescription from './ProblemDescription'; // Importar el nuevo componente
+import './ReportForm.css';
+import ProblemDescription from './ProblemDescription';
+import acciones from '../data/acciones.json';
+import accionesList from '../data/accionesList.json';
 
 const ReportForm = ({ onSubmit }) => {
-    const [formData, setFormData] = useState({
-        cliente: '',
-        ticket: '',
-        problema: '',
-        configuracionWAN: false,
-        optimizacionCanalesWiFi: false,
-        cambioDNS: false,
-        reinicioONT: false,
-        reinicioMesh: false,
-        sincronizacionMesh: false,
-        cambioContraseñaWiFi: false,
-        implementacionCableadoRed: false,
-        ajusteAnchoBanda: false,
-        verificacionCoberturaWiFi: false,
-        revisionVelocidadDuplex: false,
-        verificacionDispositivosAlternativos: false,
-        configuracionVoIP: false,
-        configuracionAppFonowin: false,
-        derivacionNOC: false,
-        derivacionVT: false,
-        supervisorNOC: '',
-        supervisorVT: '',
-        recomendaciones: '',
-        resultados: '',
-        comentarios: '',
-    });
+    const [formData, setFormData] = useState({});
+
+    useEffect(() => {
+        setFormData(acciones);
+    }, []);
 
     const handleChange = (e) => {
         const { name, value, type, checked } = e.target;
@@ -87,24 +68,11 @@ const ReportForm = ({ onSubmit }) => {
             <div className="card">
                 <div className="card-header">Acciones</div>
                 <div className="card-body">
-                    {[
-                        'configuracionWAN',
-                        'optimizacionCanalesWiFi',
-                        'cambioDNS',
-                        'reinicioONT',
-                        'reinicioMesh',
-                        'sincronizacionMesh',
-                        'cambioContraseñaWiFi',
-                        'implementacionCableadoRed',
-                        'ajusteAnchoBanda',
-                        'verificacionCoberturaWiFi',
-                        'revisionVelocidadDuplex',
-                        'verificacionDispositivosAlternativos',
-                        'configuracionVoIP',
-                        'configuracionAppFonowin'
-                    ].map((field, index) => (
+                    {accionesList.map((field, index) => (
                         <div className="form-group row" key={index}>
-                            <label className="col-sm-6 col-form-label">{field.replace(/([A-Z])/g, ' $1').replace(/ W A N/g, ' WAN').replace(/ D N S/g, ' DNS').replace(/ O N T/g, ' ONT').replace(/ Wi Fi/g, ' WiFi').replace(/ Vo I P/g, ' VoIP').replace(/ App Fonowin/g, ' App Fonowin').charAt(0).toUpperCase() + field.replace(/([A-Z])/g, ' $1').replace(/ W A N/g, ' WAN').replace(/ D N S/g, ' DNS').replace(/ O N T/g, ' ONT').replace(/ Wi Fi/g, ' WiFi').replace(/ Vo I P/g, ' VoIP').replace(/ App Fonowin/g, ' App Fonowin').slice(1)}</label>
+                            <label className="col-sm-6 col-form-label">
+                                {field.replace(/([A-Z])/g, ' $1').replace(/ W A N/g, ' WAN').replace(/ D N S/g, ' DNS').replace(/ O N T/g, ' ONT').replace(/ Wi Fi/g, ' WiFi').replace(/ Vo I P/g, ' VoIP').replace(/ App Fonowin/g, ' App Fonowin').charAt(0).toUpperCase() + field.replace(/([A-Z])/g, ' $1').replace(/ W A N/g, ' WAN').replace(/ D N S/g, ' DNS').replace(/ O N T/g, ' ONT').replace(/ Wi Fi/g, ' WiFi').replace(/ Vo I P/g, ' VoIP').replace(/ App Fonowin/g, ' App Fonowin').slice(1)}
+                            </label>
                             <div className="col-sm-6">
                                 <input type="checkbox" name={field} className="form-check-input" checked={formData[field]} onChange={handleChange} />
                                 <label className="form-check-label" htmlFor={field}></label>

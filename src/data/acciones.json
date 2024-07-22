@@ -1,0 +1,27 @@
+{
+    "cliente": "",
+    "ticket": "",
+    "problema": "",
+    "configuracionWAN": false,
+    "optimizacionCanalesWiFi": false,
+    "cambioDNS": false,
+    "reinicioONT": false,
+    "reinicioMesh": false,
+    "sincronizacionMesh": false,
+    "cambioContraseñaWiFi": false,
+    "implementacionCableadoRed": false,
+    "ajusteAnchoBanda": false,
+    "verificacionCoberturaWiFi": false,
+    "revisionVelocidadDuplex": false,
+    "verificacionDispositivosAlternativos": false,
+    "configuracionVoIP": false,
+    "configuracionAppFonowin": false,
+    "derivacionNOC": false,
+    "derivacionVT": false,
+    "supervisorNOC": "",
+    "supervisorVT": "",
+    "recomendaciones": "",
+    "resultados": "",
+    "comentarios": ""
+  }
+  
